@@ -140,18 +140,4 @@ A integração entre o ESP32 e o servidor MQTT do ThingsBoard é realizada da se
 
 ---
 
-## 📊 Gráficos, Pseudocódigo e Diagramas
 
-### 🧠 Pseudocódigo
-
-```plaintext
-loop:
- a cada 2 segundos:
-     desabilita interrupção
-     conta pulsos do sensor
-     habilita interrupção
-     calcula fluxo e volume
-     calcula valor da conta
-     acende LED se houve fluxo
-     envia dados via MQTT (JSON)
-  
