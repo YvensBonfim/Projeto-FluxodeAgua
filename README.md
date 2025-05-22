@@ -97,4 +97,61 @@ A integração entre o ESP32 e o servidor MQTT do ThingsBoard é realizada da se
 ### 3️⃣ Upload do Código no Arduino IDE
 
 1. Instale a [Arduino IDE](https://www.arduino.cc/en/software)  
-2. Adicione a URL do ESP32 em **Arquivo > Preferências**:  
+2. Adicione a URL do ESP32 em **Arquivo > Preferências**:
+3. Em **Placa > Gerenciador de Placas**, instale **ESP32 by Espressif**  
+4. Instale as bibliotecas:
+- PubSubClient
+- ArduinoJson  
+5. Preencha o código com:
+- SSID e senha do Wi-Fi
+- TOKEN do ThingsBoard  
+6. Selecione a placa **ESP32 Dev Module**
+7. Faça upload do código
+
+---
+
+### 4️⃣ Criar um Dispositivo no ThingsBoard
+
+1. Acesse: [thingsboard.cloud](https://thingsboard.cloud)
+2. Crie uma conta gratuita
+3. Vá em **Devices > "+" > Add new device**
+4. Nomeie como `ESP32_FluxoAgua`
+5. Copie o **Access Token**
+6. Cole no código como `#define TOKEN "seu_token_aqui"`
+
+---
+
+### 5️⃣ Criar Dashboard no ThingsBoard
+
+1. Vá até **Dashboards > "+" > Add new dashboard**
+2. Adicione os widgets:
+- Gauge: `fluxo_L_min`
+- Time Series Chart: `volume_total_L`, `conta_R$`
+3. Crie um alias para vincular o dispositivo
+
+---
+
+### 6️⃣ Testar o Sistema
+
+- Use o Serial Monitor (baud 19200)
+- Sopre no sensor ou conecte à torneira
+- O LED acenderá com fluxo detectado
+- Os dados devem aparecer no ThingsBoard em tempo real
+
+---
+
+## 📊 Gráficos, Pseudocódigo e Diagramas
+
+### 🧠 Pseudocódigo
+
+```plaintext
+loop:
+ a cada 2 segundos:
+     desabilita interrupção
+     conta pulsos do sensor
+     habilita interrupção
+     calcula fluxo e volume
+     calcula valor da conta
+     acende LED se houve fluxo
+     envia dados via MQTT (JSON)
+  
